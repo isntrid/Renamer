@@ -1,4 +1,4 @@
-# __File rename program__ 📁
+# __Renamer__ 📁
 
 This program can rename any file in a given folder by numerical order.
 
