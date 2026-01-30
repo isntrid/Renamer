@@ -65,6 +65,8 @@ def apply_mapping(mapping, direction="forward"):
         FileNotFoundError: If the program cannot locate a file
     """
     counter = 0
+    failures = 0
+    succeeded = []
 
     for new, old in mapping.items():
         ext = os.path.splitext(old)[1]
@@ -79,16 +81,27 @@ def apply_mapping(mapping, direction="forward"):
         try:
             os.rename(src, dst)
             counter += 1
+            succeeded.append((src, dst))
         except FileNotFoundError:
             print(f"Missing file: {src}")
+            failures += 1
         except PermissionError:
             raise PermissionError("Insufficient permissions to rename files")
+
+        # rollback if 3 failures occured
+        if failures == 3 and direction == "forward":
+            print("3 rename failures encountered, rolling back...")
+            for s, d in succeeded:
+                try:
+                    os.rename(d, s)
+                except:
+                    pass 
+            return
 
     if direction == "forward":
         print(f"{counter} files were renamed successfully")
     else:
         print(f"{counter} files were reverted successfully")
-
 
 def main():
     get_path()
