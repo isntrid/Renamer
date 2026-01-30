@@ -62,7 +62,7 @@ def apply_mapping(mapping, direction="forward"):
 
     Raises:
         PermissionError: If the program doesn't have the permissions to rename files
-        FIleNotFoundError: If the program cannot locate a file
+        FileNotFoundError: If the program cannot locate a file
     """
     counter = 0
 
