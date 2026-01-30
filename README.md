@@ -10,6 +10,7 @@ You can use this program to quickly and easily order and rename large amounts of
 - Shows you the first 10 files within a given folder
 - Works simply, efficiently and quickly
 - Allows for undoing of renaming
+- Will stop automatically and undo all file renaming if 3 errors occur
 
 ## Requirements
 - Python 3.8+
