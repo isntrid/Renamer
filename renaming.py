@@ -31,9 +31,10 @@ def get_path():
     """
     Gets the name of the folder within which the user wishes to rename files
     """
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    os.chdir(os.path.dirname(os.path.abspath(__file__))) # sets working directory to main folder within which file is within
 
-    while True:
+    max_attempts = 5
+    for attempts in range(max_attempts):
         folder = input("Where would you like to rename files within? Give the name of a folder WITHIN the folder this program is saved: ")
         if os.path.isdir(folder):
             try:
@@ -42,17 +43,22 @@ def get_path():
             except PermissionError:
                 raise PermissionError("Unable to open folder due to lack of permissions")
         print("Folder not found, please try again")
+    raise RuntimeError("Maximum input attempts exceeded")
 
 
 def get_input():
     """
     Asks user for base name for files.
     """
-    while True:
-        name = input("What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
+    
+    max_attempts = 5
+    for attempts in range(max_attempts):
+        name = input(
+            "What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
         if name:
             return name
         print("Invalid input, please try again")
+    raise RuntimeError("Maximum input attempts exceeded")
 
 
 def apply_mapping(mapping, direction="forward"):
@@ -67,22 +73,22 @@ def apply_mapping(mapping, direction="forward"):
     failures = 0
     succeeded = []
 
-    for new, old in mapping.items():
-        ext = os.path.splitext(old)[1]
+    for new_name, old_name in mapping.items():
+        extension = os.path.splitext(old_name)[1]
 
         if direction == "forward":
-            src = old
-            dst = new + ext
+            source = old_name
+            destination = new_name + extension
         elif direction == "undo":
-            src = new + ext
-            dst = old
+            source = new_name + extension
+            destination = old_name
             
         try:
-            os.rename(src, dst)
+            os.rename(source, destination)
             counter += 1
-            succeeded.append((src, dst))
+            succeeded.append((source, destination))
         except FileNotFoundError:
-            print(f"Missing file: {src}")
+            print(f"Missing file: {source}")
             failures += 1
         except PermissionError:
             raise PermissionError("Insufficient permissions to rename files")
@@ -90,9 +96,9 @@ def apply_mapping(mapping, direction="forward"):
         # rollback if 3 failures occured
         if failures == 3 and direction == "forward":
             print("3 rename failures encountered, rolling back...")
-            for s, d in succeeded:
+            for success_source, success_destination in succeeded:
                 try:
-                    os.rename(d, s)
+                    os.rename(success_destination, success_source)
                 except:
                     pass 
             return
