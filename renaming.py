@@ -1,4 +1,4 @@
-import os 
+import os
 
 def new_names(f_list, inp_name):
     """
@@ -107,6 +107,7 @@ def apply_mapping(mapping, direction="forward"):
         print(f"{counter} files were renamed successfully")
     else:
         print(f"{counter} files were reverted successfully")
+
 
 def main():
     get_path()
