@@ -49,8 +49,7 @@ def get_input():
     Asks user for base name for files.
     """
     while True:
-        name = input(
-            "What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
+        name = input("What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
         if name:
             return name
         print("Invalid input, please try again")
