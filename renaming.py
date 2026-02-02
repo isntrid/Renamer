@@ -35,7 +35,7 @@ def get_path():
 
     max_attempts = 5
     for attempts in range(max_attempts):
-        folder = input("Where would you like to rename files within? Give the name of a folder WITHIN the folder this program is saved: ")
+        folder = input("Where would youlike to rename files within? Give the name of a folder WITHIN the folder this program is saved: ")
         if os.path.isdir(folder):
             try:
                 os.chdir(folder)
