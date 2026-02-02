@@ -31,15 +31,17 @@ def get_path():
     """
     Gets the name of the folder within which the user wishes to rename files
     """
-    os.chdir(os.path.dirname(os.path.abspath(__file__))) # sets working directory to main folder within which file is within
-
+    
+    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+    
     max_attempts = 5
     for attempts in range(max_attempts):
         folder = input("Where would youlike to rename files within? Give the name of a folder WITHIN the folder this program is saved: ")
         if os.path.isdir(folder):
             try:
-                os.chdir(folder)
-                return
+                target = os.path.join(SCRIPT_DIR, "Downloads", folder)
+                if os.path.isdir(target):
+                    return target
             except PermissionError:
                 raise PermissionError("Unable to open folder due to lack of permissions")
         print("Folder not found, please try again")
