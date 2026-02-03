@@ -28,21 +28,22 @@ def file_retriever():
 
 def get_path():
     """
-    Gets the name of the folder within which the user wishes to rename files
+    Gets the absolute path of the folder within which the user wishes to rename files
+    
+    Raises:
+        RunTimeError: Occurs when user fails to input a valid folder name more than 5 times.
     """
-    
-    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-    
+
+    DOWNLOADS_DIR = os.path.join(os.path.expanduser("~"), "Downloads")
+
     max_attempts = 5
-    for attempts in range(max_attempts):
-        folder = input("Where would you like to rename files within? Give the name of a folder WITHIN the folder this program is saved: ")
-        if os.path.isdir(folder):
-            try:
-                target = os.path.join(SCRIPT_DIR, "Downloads", folder)
-                if os.path.isdir(target):
-                    return target
-            except PermissionError:
-                raise PermissionError("Unable to open folder due to lack of permissions")
+    for _ in range(max_attempts):
+        
+        folder = input("Where would you like to rename files within? Give the name of a folder inside your Downloads folder: ")
+        target = os.path.join(DOWNLOADS_DIR, folder)
+
+        if os.path.isdir(target):
+            return target
         print("Folder not found, please try again")
     raise RuntimeError("Maximum input attempts exceeded")
 
@@ -50,10 +51,13 @@ def get_path():
 def get_input():
     """
     Asks user for base name for files.
+    
+    Raises:
+        RunTimeError: Occurs when user fails to input a valid base name more than 5 times.
     """
     
     max_attempts = 5
-    for attempts in range(max_attempts):
+    for _ in range(max_attempts):
         name = input("What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
         if name:
             return name
@@ -110,7 +114,13 @@ def apply_mapping(mapping, direction="forward"):
 
 
 def main():
-    get_path()
+    
+    original_cwd = os.getcwd()
+    
+    target_dir = get_path()
+    
+    os.chdir(target_dir)
+
     files = file_retriever()
     base_name = get_input()
 
@@ -121,6 +131,8 @@ def main():
     choice = input("Undo this change? (y/n): ").strip().lower()
     if choice == "y":
         apply_mapping(mapping, "undo")
+    
+    os.chdir(original_cwd) # changes working directory back to original for safety
 
 
 if __name__ == "__main__":
