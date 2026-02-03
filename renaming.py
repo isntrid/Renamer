@@ -1,6 +1,7 @@
 import os
+from typing import List, Dict
 
-def new_names(f_list, inp_name):
+def new_names(f_list: List[str], inp_name: str) -> Dict[str, str]:
     """
     Creates new file names in numerical order in form: (input name) (file number)
     Also creates a mapping of new names : old names for undoing process
@@ -14,7 +15,7 @@ def new_names(f_list, inp_name):
     return mapping
 
 
-def file_retriever():
+def file_retriever() -> None:
     """
     Retrieves files within specified folder
     """
@@ -26,7 +27,7 @@ def file_retriever():
     print(f"First 10 files within given folder: {files[:10]}")
     return files
 
-def get_path():
+def get_path() -> None:
     """
     Gets the absolute path of the folder within which the user wishes to rename files
     
@@ -48,7 +49,7 @@ def get_path():
     raise RuntimeError("Maximum input attempts exceeded")
 
 
-def get_input():
+def get_input() -> None:
     """
     Asks user for base name for files.
     
@@ -65,7 +66,7 @@ def get_input():
     raise RuntimeError("Maximum input attempts exceeded")
 
 
-def apply_mapping(mapping, direction="forward"):
+def apply_mapping(mapping: Dict[str, str], direction: str = "forward") -> None:
     """
     Renames files using mapping.
 
@@ -113,7 +114,7 @@ def apply_mapping(mapping, direction="forward"):
         print(f"{counter} files were reverted successfully")
 
 
-def main():
+def main() -> None:
     
     original_cwd = os.getcwd()
     
