@@ -1,6 +1,7 @@
 import os
+from typing import List, Dict
 
-def new_names(f_list, inp_name):
+def new_names(f_list: List[str], inp_name: str) -> Dict[str, str]:
     """
     Creates new file names in numerical order in form: (input name) (file number)
     Also creates a mapping of new names : old names for undoing process
@@ -65,7 +66,7 @@ def get_input():
     raise RuntimeError("Maximum input attempts exceeded")
 
 
-def apply_mapping(mapping, direction="forward"):
+def apply_mapping(mapping: Dict[str, str], direction: str = "forward"):
     """
     Renames files using mapping.
 
