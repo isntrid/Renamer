@@ -40,29 +40,35 @@ def get_path() -> None:
     max_attempts = 5
     for _ in range(max_attempts):
         
-        folder = input("Where would you like to rename files within? Give the name of a folder inside your Downloads folder: ")
+        folder = input("Where would you like to rename files within? Give the name of a folder inside your Downloads folder: ").strip()
         target = os.path.join(DOWNLOADS_DIR, folder)
-
+        
+        if not folder:
+            print("Folder name cannot be empty")
+            continue
         if os.path.isdir(target):
             return target
         print("Folder not found, please try again")
     raise RuntimeError("Maximum input attempts exceeded")
 
 
-def get_input() -> None:
+def get_input() -> str:
     """
     Asks user for base name for files.
-    
+
     Raises:
-        RunTimeError: Occurs when user fails to input a valid base name more than 5 times.
+        RuntimeError: Occurs when user fails to input a valid base name more than 5 times.
     """
-    
     max_attempts = 5
     for _ in range(max_attempts):
+        
         name = input("What do you want to call the files? They will be named like: (name) 1, (name) 2, and so on: ").strip()
-        if name:
-            return name
-        print("Invalid input, please try again")
+
+        if not name:
+            print("Name cannot be empty")
+            continue
+        return name
+
     raise RuntimeError("Maximum input attempts exceeded")
 
 
