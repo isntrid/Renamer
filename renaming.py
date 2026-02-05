@@ -150,7 +150,7 @@ def main() -> None:
             print("Please pick between y or n")
         if count == 5:
             apply_mapping(mapping, "undo")
-            raise RuntimeError("Maximum input attempts exceeded, reverting changes..")
+            raise RuntimeError("Maximum input attempts exceeded, reverting changes automatically...")
             
     os.chdir(original_cwd) # changes working directory back to original for safety
 
