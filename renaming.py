@@ -153,12 +153,6 @@ def main() -> None:
             raise RuntimeError("Maximum input attempts exceeded, reverting changes..")
             
     os.chdir(original_cwd) # changes working directory back to original for safety
-    
-
-
-    
-    
-
 
 if __name__ == "__main__":
     main()
