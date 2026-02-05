@@ -135,11 +135,29 @@ def main() -> None:
 
     apply_mapping(mapping, "forward")
 
-    choice = input("Undo this change? (y/n): ").strip().lower()
-    if choice == "y":
-        apply_mapping(mapping, "undo")
-    
+    max_attempts = 5
+    count = 0
+    for _ in range(max_attempts):
+        count += 1
+        choice = input("Undo this change? (y/n): ").strip().lower()
+
+        if choice == "y":
+            apply_mapping(mapping, "undo")
+            break
+        if not choice:
+            print("Name cannot be empty")
+        elif choice != "n" or "y":
+            print("Please pick between y or n")
+        if count == 5:
+            apply_mapping(mapping, "undo")
+            raise RuntimeError("Maximum input attempts exceeded, reverting changes..")
+            
     os.chdir(original_cwd) # changes working directory back to original for safety
+    
+
+
+    
+    
 
 
 if __name__ == "__main__":
