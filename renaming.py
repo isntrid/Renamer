@@ -124,7 +124,6 @@ def main() -> None:
     
     # main flow
     original_cwd = os.getcwd()
-    
     target_dir = get_path()
     os.chdir(target_dir)
     files = file_retriever()
