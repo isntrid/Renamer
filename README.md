@@ -14,4 +14,4 @@ You can use this program to quickly and easily order and rename large amounts of
 
 ## Requirements
 - Python 3.8+
-- Read/write permissions for target folder# Renamer
+- Read/write permissions for target folder
