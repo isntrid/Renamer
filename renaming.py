@@ -122,19 +122,15 @@ def apply_mapping(mapping: Dict[str, str], direction: str = "forward") -> None:
 
 def main() -> None:
     
+    # main flow
     original_cwd = os.getcwd()
-    
     target_dir = get_path()
-    
     os.chdir(target_dir)
-
     files = file_retriever()
     base_name = get_input()
-
     mapping = new_names(files, base_name)
-
     apply_mapping(mapping, "forward")
-
+    
     max_attempts = 5
 
     for _ in range(max_attempts):
@@ -152,7 +148,6 @@ def main() -> None:
     else:
         apply_mapping(mapping, "undo")
         raise RuntimeError("Maximum input attempts exceeded, reverting changes automatically...")
-
     os.chdir(original_cwd) # changes working directory back to original for safety
 
 if __name__ == "__main__":
